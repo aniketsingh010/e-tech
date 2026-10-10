@@ -15,11 +15,11 @@ const Navbar = () => {
             <ul
               tabIndex={-1}
               className="menu menu-sm dropdown-content  rounded-box z-1 mt-3 w-52 p-2 shadow bg-white text-black hover:bg-amber-200">
-              <li><Link to='/'>Homepage</Link></li>
-              <li><Link to='/about'>ABOUTS</Link></li>
+              <li><Link to='/'>Home</Link></li>
+              <li><Link to='/about'>Abouts</Link></li>
               <li><Link to="/category">Category</Link></li>
               <li><Link to="/Details">Details</Link></li>
-              <li><Link to="/Card">Card</Link></li>
+              <li><Link to="/Card">Card pages</Link></li>
               <li><Link to="/Procducts">Product</Link></li>
               <li><Link to="/contact">Contact</Link></li>
               <li><Link to="/Cards" className='text-amber-600 bg-amber-950'>Cards</Link></li>
