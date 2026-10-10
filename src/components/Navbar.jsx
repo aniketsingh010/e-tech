@@ -29,8 +29,8 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="navbar-center">
-            <img src={img1} alt='tech' className='max-h-20 w-20 shadow-2xl rounded-3xl' />
-            <a className="btn btn-ghost text-xl text-yellow-400 xs:hidden sm:block xl:block lg:block">E-Tech Electroncs</a>
+            <img src={img1} alt='tech' className='max-h-20 w-20 shadow-2xl rounded-3xl xs:h-[40px] xs:w-[40px]' />
+            <a className="btn btn-ghost text-sm  border-l-0 ">E-Tech <span className='text-blue-600'>Store</span></a>
             {/* <input type="text" placeholder='Search' className='border-2 border-amber-400'/> */}
           </div>
         </div>
