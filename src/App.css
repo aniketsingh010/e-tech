@@ -1,2 +1,5 @@
 @plugin "daisyui";
 @import "tailwindcss";
+@theme {
+  --breakpoint-xs: 200px;
+}

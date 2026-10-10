@@ -27,7 +27,7 @@ const Navbar = () => {
           </div>
           <div className="navbar-center">
             <img src={img1} alt='tech' className='max-h-20 w-20 shadow-2xl rounded-3xl' />
-            <a className="btn btn-ghost text-xl text-yellow-400 sm:hidden xl:block lg:block">E-Tech Electroncs</a>
+            <a className="btn btn-ghost text-xl text-yellow-400 xs:hidden sm:block xl:block lg:block">E-Tech Electroncs</a>
             {/* <input type="text" placeholder='Search' className='border-2 border-amber-400'/> */}
           </div>
         </div>
