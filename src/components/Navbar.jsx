@@ -22,6 +22,9 @@ const Navbar = () => {
               <li><Link to="/Card">Card</Link></li>
               <li><Link to="/Procducts">Product</Link></li>
               <li><Link to="/contact">Contact</Link></li>
+              <li><Link to="/Cards" className="btn btn-ghost text-xl">Cards</Link></li>
+              <li> <Link to="/login" className="btn btn-ghost text-xl">Login</Link></li>
+          <li><Link to="/Registation" className="btn btn-ghost text-xl">Register</Link></li>
 
             </ul>
           </div>
@@ -35,7 +38,7 @@ const Navbar = () => {
          
         </div>
         <div className="navbar-end">
-           <Link to="/Cards" className="btn btn-ghost text-xl">Cards</Link>
+           <Link to="/Cards" className="btn btn-ghost text-xl xs:none sm:block">Cards</Link>
           <Link to="/login" className="btn btn-ghost text-xl">Login</Link>
           <Link to="/Registation" className="btn btn-ghost text-xl">Register</Link>
           <button className="btn btn-ghost btn-circle">
