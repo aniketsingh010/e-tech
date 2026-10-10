@@ -73,13 +73,13 @@ function Footer() {
               </a>
 
               <a
-                href="https://www.instagram.com/"
+                href="https://www.instagram.com/aniket__singh033"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Instagram"
                 className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-pink-600 text-white transition"
               >
-                ig
+                <img src="https://cdn.mos.cms.futurecdn.net/6dDoc8GV9fYUPExgLYPqqT.jpg" className="h-10 w-10 rounded-2xl"/>
               </a>
 
               <a
