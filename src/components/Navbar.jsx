@@ -22,9 +22,9 @@ const Navbar = () => {
               <li><Link to="/Card">Card</Link></li>
               <li><Link to="/Procducts">Product</Link></li>
               <li><Link to="/contact">Contact</Link></li>
-              <li><Link to="/Cards" className="btn btn-ghost text-xl">Cards</Link></li>
-              <li> <Link to="/login" className="btn btn-ghost text-xl">Login</Link></li>
-          <li><Link to="/Registation" className="btn btn-ghost text-xl">Register</Link></li>
+              <li><Link to="/Cards" className='text-amber-600 bg-amber-950'>Cards</Link></li>
+              <li> <Link to="/login" className="text-amber-50 bg-amber-300">Login</Link></li>
+          <li><Link to="/Registation" className="text-red-400 bg-amber-100">Register</Link></li>
 
             </ul>
           </div>
