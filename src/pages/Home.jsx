@@ -1,882 +1,682 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
-const Home = () => {
+const categories = [
+  {
+    name: "Laptops",
+    icon: "💻",
+    description: "Powerful performance",
+    color: "bg-blue-50",
+    link: "/categories",
+  },
+  {
+    name: "Smartphones",
+    icon: "📱",
+    description: "Latest smartphones",
+    color: "bg-purple-50",
+    link: "/categories",
+  },
+  {
+    name: "Headphones",
+    icon: "🎧",
+    description: "Premium sound",
+    color: "bg-orange-50",
+    link: "/categories",
+  },
+  {
+    name: "Smartwatches",
+    icon: "⌚",
+    description: "Smart lifestyle",
+    color: "bg-green-50",
+    link: "/categories",
+  },
+  {
+    name: "Gaming",
+    icon: "🎮",
+    description: "Level up gaming",
+    color: "bg-pink-50",
+    link: "/categories",
+  },
+  {
+    name: "Cameras",
+    icon: "📷",
+    description: "Capture moments",
+    color: "bg-yellow-50",
+    link: "/categories",
+  },
+];
+
+const products = [
+  {
+    id: 1,
+    name: "Premium Laptop",
+    category: "Computers",
+    price: 55999,
+    oldPrice: 65999,
+    rating: 4.8,
+    badge: "BEST SELLER",
+    image:
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: 2,
+    name: "Smartphone Pro",
+    category: "Smartphones",
+    price: 24999,
+    oldPrice: 29999,
+    rating: 4.9,
+    badge: "POPULAR",
+    image:
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: 3,
+    name: "Wireless Headphones",
+    category: "Audio",
+    price: 2499,
+    oldPrice: 3499,
+    rating: 4.6,
+    badge: "TRENDING",
+    image:
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: 4,
+    name: "Premium Smartwatch",
+    category: "Wearables",
+    price: 3499,
+    oldPrice: 4999,
+    rating: 4.7,
+    badge: "NEW ARRIVAL",
+    image:
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80",
+  },
+];
+
+function Home() {
+  const [cartCount, setCartCount] = useState(0);
+  const [wishlist, setWishlist] = useState([]);
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+
+  const formatPrice = (price) =>
+    new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0,
+    }).format(price);
+
+  // Demo Add to Cart button
+  const handleAddToCart = (product) => {
+    setCartCount((count) => count + 1);
+    alert(`${product.name} added to cart!`);
+  };
+
+  // Wishlist button
+  const handleWishlist = (productId) => {
+    setWishlist((previous) =>
+      previous.includes(productId)
+        ? previous.filter((id) => id !== productId)
+        : [...previous, productId]
+    );
+  };
+
+  // Newsletter form
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+
+    if (!email.trim()) return;
+
+    setSubscribed(true);
+    setEmail("");
+  };
+
   return (
-  <>
-  <Navbar/>
-  <div>
-    {/* Shop By Category Section */}
-<section className="bg-white py-16 px-6">
+    <>
+      <Navbar />
 
-  <div className="max-w-7xl mx-auto">
+      <main className="overflow-hidden bg-white text-gray-900">
 
-    {/* Section Heading */}
-    <div className="text-center mb-12">
+        {/* ================= HERO SECTION ================= */}
+        <section className="relative overflow-hidden bg-slate-950 text-white">
+          <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-blue-600/20 blur-3xl"></div>
 
-      <p className="text-blue-600 font-semibold uppercase tracking-widest">
-        Explore Our Collection
-      </p>
+          <div className="absolute -bottom-40 right-0 h-96 w-96 rounded-full bg-purple-600/20 blur-3xl"></div>
 
-      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-3">
-        Shop By Category
-      </h2>
+          <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 py-16 sm:px-8 md:py-24 lg:grid-cols-2 lg:px-10">
 
-      <p className="text-gray-500 mt-4">
-        Find the best electronics for your everyday needs.
-      </p>
+            {/* Hero Text */}
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-2 text-sm font-semibold text-blue-300">
+                <span className="h-2 w-2 rounded-full bg-blue-400"></span>
+                Welcome to E-Tech Store
+              </span>
 
-    </div>
+              <h1 className="mt-7 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+                Upgrade Your
+                <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  Digital World
+                </span>
+              </h1>
 
-    {/* Category Cards */}
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+              <p className="mt-6 max-w-xl text-base leading-8 text-gray-300 sm:text-lg">
+                Discover the latest laptops, smartphones, headphones
+                and smart gadgets at exciting prices. Find your next
+                favourite technology with E-Tech.
+              </p>
 
-      {/* Laptop */}
-      <div className="group bg-gray-50 rounded-2xl p-5 text-center hover:bg-blue-50 hover:shadow-lg transition duration-300 cursor-pointer">
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Link
+                  to="/products"
+                  className="rounded-xl bg-blue-600 px-7 py-4 font-bold text-white shadow-lg shadow-blue-900/30 transition hover:-translate-y-1 hover:bg-blue-500"
+                >
+                  Shop Now →
+                </Link>
 
-        <div className="text-5xl mb-4 group-hover:scale-110 transition duration-300">
-          💻
-        </div>
+                <Link
+                  to="/categories"
+                  className="rounded-xl border border-white/20 px-7 py-4 font-bold text-white transition hover:bg-white/10"
+                >
+                  Explore Categories
+                </Link>
+              </div>
 
-        <h3 className="font-bold text-gray-800">
-          Laptops
-        </h3>
+              {/* Hero Statistics */}
+              <div className="mt-12 grid max-w-md grid-cols-3 gap-4 border-t border-white/10 pt-7">
+                <div>
+                  <p className="text-2xl font-extrabold sm:text-3xl">
+                    100+
+                  </p>
+                  <p className="mt-1 text-xs text-gray-400 sm:text-sm">
+                    Products
+                  </p>
+                </div>
 
-        <p className="text-sm text-gray-500 mt-2">
-          Explore laptops
-        </p>
+                <div>
+                  <p className="text-2xl font-extrabold sm:text-3xl">
+                    24/7
+                  </p>
+                  <p className="mt-1 text-xs text-gray-400 sm:text-sm">
+                    Support
+                  </p>
+                </div>
 
-      </div>
+                <div>
+                  <p className="text-2xl font-extrabold sm:text-3xl">
+                    100%
+                  </p>
+                  <p className="mt-1 text-xs text-gray-400 sm:text-sm">
+                    Dedication
+                  </p>
+                </div>
+              </div>
+            </div>
 
-      {/* Smartphones */}
-      <div className="group bg-gray-50 rounded-2xl p-5 text-center hover:bg-blue-50 hover:shadow-lg transition duration-300 cursor-pointer">
+            {/* Hero Image */}
+            <div className="relative mx-auto w-full max-w-xl">
+              <div className="absolute inset-0 scale-90 rounded-full bg-blue-500/20 blur-3xl"></div>
 
-        <div className="text-5xl mb-4 group-hover:scale-110 transition duration-300">
-          📱
-        </div>
+              <div className="relative rounded-3xl border border-white/10 bg-white/5 p-3 shadow-2xl backdrop-blur-sm">
+                <img
+                  src="https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=1000&q=85"
+                  alt="Electronics and gadgets collection"
+                  className="h-72 w-full rounded-2xl object-cover sm:h-96"
+                />
 
-        <h3 className="font-bold text-gray-800">
-          Smartphones
-        </h3>
+                <div className="absolute -bottom-5 left-3 rounded-2xl border border-gray-100 bg-white p-4 text-gray-900 shadow-xl sm:-left-5 sm:p-5">
+                  <p className="text-xs font-medium text-gray-500">
+                    Discover something new
+                  </p>
+                  <p className="mt-1 text-lg font-extrabold">
+                    Tech for Everyone ✨
+                  </p>
+                </div>
 
-        <p className="text-sm text-gray-500 mt-2">
-          Latest mobiles
-        </p>
+                <div className="absolute -right-2 top-7 rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold shadow-xl sm:-right-5">
+                  Explore. Discover. Shop.
+                </div>
+              </div>
+            </div>
 
-      </div>
-
-      {/* Headphones */}
-      <div className="group bg-gray-50 rounded-2xl p-5 text-center hover:bg-blue-50 hover:shadow-lg transition duration-300 cursor-pointer">
-
-        <div className="text-5xl mb-4 group-hover:scale-110 transition duration-300">
-          🎧
-        </div>
-
-        <h3 className="font-bold text-gray-800">
-          Headphones
-        </h3>
-
-        <p className="text-sm text-gray-500 mt-2">
-          Quality sound
-        </p>
-
-      </div>
-
-      {/* Smartwatch */}
-      <div className="group bg-gray-50 rounded-2xl p-5 text-center hover:bg-blue-50 hover:shadow-lg transition duration-300 cursor-pointer">
-
-        <div className="text-5xl mb-4 group-hover:scale-110 transition duration-300">
-          ⌚
-        </div>
-
-        <h3 className="font-bold text-gray-800">
-          Smartwatches
-        </h3>
-
-        <p className="text-sm text-gray-500 mt-2">
-          Smart lifestyle
-        </p>
-
-      </div>
-
-      {/* Gaming */}
-      <div className="group bg-gray-50 rounded-2xl p-5 text-center hover:bg-blue-50 hover:shadow-lg transition duration-300 cursor-pointer">
-
-        <div className="text-5xl mb-4 group-hover:scale-110 transition duration-300">
-          🎮
-        </div>
-
-        <h3 className="font-bold text-gray-800">
-          Gaming
-        </h3>
-
-        <p className="text-sm text-gray-500 mt-2">
-          Gaming gadgets
-        </p>
-
-      </div>
-
-      {/* Cameras */}
-      <div className="group bg-gray-50 rounded-2xl p-5 text-center hover:bg-blue-50 hover:shadow-lg transition duration-300 cursor-pointer">
-
-        <div className="text-5xl mb-4 group-hover:scale-110 transition duration-300">
-          📷
-        </div>
-
-        <h3 className="font-bold text-gray-800">
-          Cameras
-        </h3>
-
-        <p className="text-sm text-gray-500 mt-2">
-          Capture moments
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-  </div>
-  <div>
-    {/* Featured Products Section */}
-<section className="bg-gray-50 py-16 px-6">
-
-  <div className="max-w-7xl mx-auto">
-
-    {/* Heading */}
-    <div className="flex flex-col md:flex-row justify-between items-center mb-10">
-
-      <div>
-        <p className="text-blue-600 font-semibold uppercase tracking-widest">
-          Our Collection
-        </p>
-
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2">
-          Featured Products
-        </h2>
-
-        <p className="text-gray-500 mt-3">
-          Discover our popular electronics and gadgets.
-        </p>
-      </div>
-
-      <button className="mt-5 md:mt-0 border border-blue-600 text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-600 hover:text-white transition">
-        View All Products →
-      </button>
-
-    </div>
-
-    {/* Product Cards */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
-
-      {/* Product 1: Laptop */}
-      <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group">
-
-        <div className="relative bg-gray-100 p-4">
-
-          <span className="absolute top-5 left-5 bg-blue-600 text-white text-xs px-3 py-1 rounded-full">
-            Featured
-          </span>
-
-          <button
-            type="button"
-            aria-label="Add laptop to wishlist"
-            className="absolute top-5 right-5 bg-white rounded-full w-9 h-9"
-          >
-            ♡
-          </button>
-
-          <img
-            src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600"
-            alt="Laptop"
-            className="w-full h-48 object-cover rounded-xl group-hover:scale-105 transition duration-300"
-          />
-
-        </div>
-
-        <div className="p-5">
-
-          <p className="text-sm text-gray-500">Computers</p>
-
-          <h3 className="text-lg font-bold mt-1">
-            Premium Laptop
-          </h3>
-
-          <div className="flex items-center gap-2 mt-2">
-            <span className="text-yellow-500">★★★★★</span>
-            <span className="text-sm text-gray-500">(4.5)</span>
           </div>
+        </section>
 
-          <div className="flex items-center gap-3 mt-4">
-            <span className="text-xl font-bold text-blue-600">
-              ₹55,999
-            </span>
+        {/* ================= BENEFITS SECTION ================= */}
+        <section className="border-b border-gray-100 bg-white">
+          <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-5 py-8 sm:px-8 md:grid-cols-4 lg:px-10">
 
-            <span className="text-sm text-gray-400 line-through">
-              ₹65,999
-            </span>
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-2xl">
+                🚚
+              </div>
+              <div>
+                <h3 className="text-sm font-bold sm:text-base">
+                  Delivery Information
+                </h3>
+                <p className="mt-1 text-xs text-gray-500">
+                  Check delivery options
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-green-50 text-2xl">
+                🔒
+              </div>
+              <div>
+                <h3 className="text-sm font-bold sm:text-base">
+                  Secure Shopping
+                </h3>
+                <p className="mt-1 text-xs text-gray-500">
+                  Shop with confidence
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-purple-50 text-2xl">
+                💬
+              </div>
+              <div>
+                <h3 className="text-sm font-bold sm:text-base">
+                  Customer Support
+                </h3>
+                <p className="mt-1 text-xs text-gray-500">
+                  We're here to help
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-2xl">
+                🎁
+              </div>
+              <div>
+                <h3 className="text-sm font-bold sm:text-base">
+                  Special Deals
+                </h3>
+                <p className="mt-1 text-xs text-gray-500">
+                  Explore product offers
+                </p>
+              </div>
+            </div>
+
           </div>
+        </section>
 
-          <button
-            type="button"
-            className="w-full mt-5 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
-          >
-            🛒 Add to Cart
-          </button>
+        {/* ================= CATEGORIES SECTION ================= */}
+        <section className="bg-gray-50 px-5 py-16 sm:px-8 md:py-20 lg:px-10">
+          <div className="mx-auto max-w-7xl">
 
-        </div>
+            <div className="mb-10 text-center">
+              <p className="text-sm font-bold uppercase tracking-widest text-blue-600">
+                Explore Our Collection
+              </p>
 
-      </div>
+              <h2 className="mt-3 text-3xl font-extrabold sm:text-4xl">
+                Shop By Category
+              </h2>
 
-      {/* Product 2: Smartphone */}
-      <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group">
+              <p className="mx-auto mt-4 max-w-xl leading-7 text-gray-500">
+                Find the right gadgets and electronics for your
+                everyday needs.
+              </p>
+            </div>
 
-        <div className="relative bg-gray-100 p-4">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6 lg:gap-5">
+              {categories.map((category) => (
+                <Link
+                  key={category.name}
+                  to={category.link}
+                  className="group rounded-2xl border border-gray-100 bg-white p-5 text-center transition duration-300 hover:-translate-y-2 hover:border-blue-200 hover:shadow-xl sm:p-6"
+                >
+                  <div
+                    className={`mx-auto flex h-16 w-16 items-center justify-center rounded-2xl ${category.color} text-4xl transition duration-300 group-hover:scale-110`}
+                  >
+                    {category.icon}
+                  </div>
 
-          <span className="absolute top-5 left-5 bg-green-600 text-white text-xs px-3 py-1 rounded-full">
-            Popular
-          </span>
+                  <h3 className="mt-4 text-sm font-bold sm:text-base">
+                    {category.name}
+                  </h3>
 
-          <button
-            type="button"
-            aria-label="Add smartphone to wishlist"
-            className="absolute top-5 right-5 bg-white rounded-full w-9 h-9"
-          >
-            ♡
-          </button>
+                  <p className="mt-2 text-xs leading-5 text-gray-500">
+                    {category.description}
+                  </p>
 
-          <img
-            src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600"
-            alt="Smartphone"
-            className="w-full h-48 object-cover rounded-xl group-hover:scale-105 transition duration-300"
-          />
+                  <p className="mt-3 text-sm font-bold text-blue-600">
+                    Explore →
+                  </p>
+                </Link>
+              ))}
+            </div>
 
-        </div>
-
-        <div className="p-5">
-
-          <p className="text-sm text-gray-500">Mobiles</p>
-
-          <h3 className="text-lg font-bold mt-1">
-            Smart Phone
-          </h3>
-
-          <div className="flex items-center gap-2 mt-2">
-            <span className="text-yellow-500">★★★★★</span>
-            <span className="text-sm text-gray-500">(4.8)</span>
           </div>
+        </section>
 
-          <div className="flex items-center gap-3 mt-4">
-            <span className="text-xl font-bold text-blue-600">
-              ₹24,999
-            </span>
+        {/* ================= FEATURED PRODUCTS ================= */}
+        <section className="px-5 py-16 sm:px-8 md:py-20 lg:px-10">
+          <div className="mx-auto max-w-7xl">
 
-            <span className="text-sm text-gray-400 line-through">
-              ₹29,999
-            </span>
+            <div className="mb-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-widest text-blue-600">
+                  Handpicked For You
+                </p>
+
+                <h2 className="mt-3 text-3xl font-extrabold sm:text-4xl">
+                  Featured Products
+                </h2>
+
+                <p className="mt-3 text-gray-500">
+                  Check out our popular electronics and gadgets.
+                </p>
+              </div>
+
+              <Link
+                to="/products"
+                className="inline-flex items-center gap-2 font-bold text-blue-600 transition hover:gap-3"
+              >
+                View All Products →
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {products.map((product) => {
+                const discount = Math.round(
+                  ((product.oldPrice - product.price) /
+                    product.oldPrice) *
+                    100
+                );
+
+                const isWishlisted = wishlist.includes(product.id);
+
+                return (
+                  <article
+                    key={product.id}
+                    className="group overflow-hidden rounded-2xl border border-gray-100 bg-white transition duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                  >
+                    {/* Product Image */}
+                    <div className="relative overflow-hidden bg-gray-50 p-3">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        loading="lazy"
+                        className="h-56 w-full rounded-xl object-cover transition duration-500 group-hover:scale-105"
+                      />
+
+                      <span className="absolute left-5 top-5 rounded-full bg-blue-600 px-3 py-1.5 text-xs font-bold text-white shadow">
+                        {product.badge}
+                      </span>
+
+                      <span className="absolute bottom-5 left-5 rounded-lg bg-red-500 px-3 py-1.5 text-xs font-bold text-white">
+                        {discount}% OFF
+                      </span>
+
+                      <button
+                        type="button"
+                        onClick={() => handleWishlist(product.id)}
+                        aria-label={
+                          isWishlisted
+                            ? "Remove from wishlist"
+                            : "Add to wishlist"
+                        }
+                        aria-pressed={isWishlisted}
+                        className={`absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full text-xl shadow-md transition hover:scale-110 ${
+                          isWishlisted
+                            ? "bg-red-500 text-white"
+                            : "bg-white text-gray-700 hover:text-red-500"
+                        }`}
+                      >
+                        {isWishlisted ? "♥" : "♡"}
+                      </button>
+                    </div>
+
+                    {/* Product Information */}
+                    <div className="p-5">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                        {product.category}
+                      </p>
+
+                      <h3 className="mt-2 text-lg font-bold transition group-hover:text-blue-600">
+                        {product.name}
+                      </h3>
+
+                      <div className="mt-3 flex items-center gap-2">
+                        <span className="text-sm tracking-widest text-amber-500">
+                          ★★★★★
+                        </span>
+
+                        <span className="text-sm font-semibold text-gray-600">
+                          {product.rating}
+                        </span>
+                      </div>
+
+                      <div className="mt-4 flex flex-wrap items-center gap-2">
+                        <span className="text-xl font-extrabold">
+                          {formatPrice(product.price)}
+                        </span>
+
+                        <span className="text-sm text-gray-400 line-through">
+                          {formatPrice(product.oldPrice)}
+                        </span>
+                      </div>
+
+                      <p className="mt-2 text-xs font-semibold text-green-600">
+                        You save{" "}
+                        {formatPrice(product.oldPrice - product.price)}
+                      </p>
+
+                      <div className="mt-5 grid grid-cols-2 gap-2">
+                        <button
+                          type="button"
+                          onClick={() => handleAddToCart(product)}
+                          className="rounded-xl bg-blue-600 px-3 py-3 text-sm font-bold text-white transition hover:bg-blue-700"
+                        >
+                          🛒 Add to Cart
+                        </button>
+
+                        <Link
+                          to={`/product-details?id=${product.id}`}
+                          className="flex items-center justify-center rounded-xl border border-gray-200 px-3 py-3 text-sm font-bold transition hover:border-blue-600 hover:text-blue-600"
+                        >
+                          Details
+                        </Link>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+
+            <div className="mt-10 text-center">
+              <Link
+                to="/products"
+                className="inline-flex rounded-xl border border-gray-300 px-7 py-3.5 font-bold transition hover:border-blue-600 hover:bg-blue-600 hover:text-white"
+              >
+                Explore All Products →
+              </Link>
+            </div>
+
           </div>
+        </section>
 
-          <button
-            type="button"
-            className="w-full mt-5 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
-          >
-            🛒 Add to Cart
-          </button>
+        {/* ================= SPECIAL OFFER SECTION ================= */}
+        <section className="px-5 py-10 sm:px-8 lg:px-10">
+          <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700">
 
-        </div>
+            <div className="grid items-center gap-8 md:grid-cols-2">
+              <div className="px-7 py-10 text-white sm:px-12 md:py-14">
+                <span className="inline-flex rounded-full bg-white/15 px-4 py-2 text-sm font-bold">
+                  ⚡ Special Collection
+                </span>
 
-      </div>
+                <h2 className="mt-6 text-3xl font-extrabold leading-tight sm:text-4xl lg:text-5xl">
+                  Find Your Next
+                  <br />
+                  Favourite Gadget
+                </h2>
 
-      {/* Product 3: Headphones */}
-      <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group">
+                <p className="mt-5 max-w-lg leading-7 text-blue-100">
+                  Explore our product collection, compare features,
+                  and discover electronics that fit your needs.
+                </p>
 
-        <div className="relative bg-gray-100 p-4">
+                <Link
+                  to="/products"
+                  className="mt-7 inline-flex rounded-xl bg-white px-7 py-3.5 font-bold text-blue-700 transition hover:-translate-y-1 hover:bg-blue-50"
+                >
+                  Explore Products →
+                </Link>
+              </div>
 
-          <span className="absolute top-5 left-5 bg-purple-600 text-white text-xs px-3 py-1 rounded-full">
-            Trending
-          </span>
+              <div className="px-6 pb-8 md:px-8 md:py-8">
+                <img
+                  src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1000&q=85"
+                  alt="Modern technology workspace"
+                  loading="lazy"
+                  className="h-64 w-full rounded-2xl object-cover shadow-2xl sm:h-80 md:h-96"
+                />
+              </div>
+            </div>
 
-          <button
-            type="button"
-            aria-label="Add headphones to wishlist"
-            className="absolute top-5 right-5 bg-white rounded-full w-9 h-9"
-          >
-            ♡
-          </button>
-
-          <img
-            src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600"
-            alt="Headphones"
-            className="w-full h-48 object-cover rounded-xl group-hover:scale-105 transition duration-300"
-          />
-
-        </div>
-
-        <div className="p-5">
-
-          <p className="text-sm text-gray-500">Audio</p>
-
-          <h3 className="text-lg font-bold mt-1">
-            Wireless Headphones
-          </h3>
-
-          <div className="flex items-center gap-2 mt-2">
-            <span className="text-yellow-500">★★★★★</span>
-            <span className="text-sm text-gray-500">(4.4)</span>
           </div>
+        </section>
 
-          <div className="flex items-center gap-3 mt-4">
-            <span className="text-xl font-bold text-blue-600">
-              ₹2,499
-            </span>
+        {/* ================= WHY CHOOSE US ================= */}
+        <section className="bg-gray-50 px-5 py-16 sm:px-8 md:py-20 lg:px-10">
+          <div className="mx-auto max-w-7xl">
 
-            <span className="text-sm text-gray-400 line-through">
-              ₹3,499
-            </span>
+            <div className="mb-10 text-center">
+              <p className="text-sm font-bold uppercase tracking-widest text-blue-600">
+                The E-Tech Experience
+              </p>
+
+              <h2 className="mt-3 text-3xl font-extrabold sm:text-4xl">
+                Why Choose E-Tech?
+              </h2>
+
+              <p className="mt-3 text-gray-500">
+                Making your online shopping experience simple and convenient.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="rounded-2xl border border-gray-100 bg-white p-7 transition hover:-translate-y-1 hover:shadow-xl">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-3xl">
+                  🛍️
+                </div>
+
+                <h3 className="mt-5 text-xl font-bold">
+                  Easy Shopping
+                </h3>
+
+                <p className="mt-3 leading-7 text-gray-500">
+                  Browse product collections and explore your favourite
+                  gadgets through a simple interface.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-gray-100 bg-white p-7 transition hover:-translate-y-1 hover:shadow-xl">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-green-50 text-3xl">
+                  💡
+                </div>
+
+                <h3 className="mt-5 text-xl font-bold">
+                  Explore Technology
+                </h3>
+
+                <p className="mt-3 leading-7 text-gray-500">
+                  Discover different electronics categories and compare
+                  products to find what suits you.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-gray-100 bg-white p-7 transition hover:-translate-y-1 hover:shadow-xl">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-purple-50 text-3xl">
+                  💬
+                </div>
+
+                <h3 className="mt-5 text-xl font-bold">
+                  Get in Touch
+                </h3>
+
+                <p className="mt-3 leading-7 text-gray-500">
+                  Have a question about our demo store? Visit our contact
+                  page to explore the support options.
+                </p>
+
+                <Link
+                  to="/contact"
+                  className="mt-4 inline-block font-bold text-blue-600 hover:underline"
+                >
+                  Contact Us →
+                </Link>
+              </div>
+            </div>
+
           </div>
+        </section>
 
-          <button
-            type="button"
-            className="w-full mt-5 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
-          >
-            🛒 Add to Cart
-          </button>
+        {/* ================= NEWSLETTER SECTION ================= */}
+        <section className="px-5 py-16 sm:px-8 md:py-20 lg:px-10">
+          <div className="mx-auto max-w-5xl rounded-3xl border border-blue-100 bg-blue-50 px-6 py-10 text-center sm:px-12 sm:py-14">
 
-        </div>
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-600 text-3xl text-white shadow-lg">
+              ✉️
+            </div>
 
-      </div>
+            <h2 className="mt-6 text-3xl font-extrabold sm:text-4xl">
+              Stay Updated With E-Tech
+            </h2>
 
-      {/* Product 4: Smartwatch */}
-      <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group">
-
-        <div className="relative bg-gray-100 p-4">
-
-          <span className="absolute top-5 left-5 bg-orange-500 text-white text-xs px-3 py-1 rounded-full">
-            New
-          </span>
-
-          <button
-            type="button"
-            aria-label="Add smartwatch to wishlist"
-            className="absolute top-5 right-5 bg-white rounded-full w-9 h-9"
-          >
-            ♡
-          </button>
-
-          <img
-            src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600"
-            alt="Smartwatch"
-            className="w-full h-48 object-cover rounded-xl group-hover:scale-105 transition duration-300"
-          />
-
-        </div>
-
-        <div className="p-5">
-
-          <p className="text-sm text-gray-500">Wearables</p>
-
-          <h3 className="text-lg font-bold mt-1">
-            Smart Watch
-          </h3>
-
-          <div className="flex items-center gap-2 mt-2">
-            <span className="text-yellow-500">★★★★★</span>
-            <span className="text-sm text-gray-500">(4.6)</span>
-          </div>
-
-          <div className="flex items-center gap-3 mt-4">
-            <span className="text-xl font-bold text-blue-600">
-              ₹3,499
-            </span>
-
-            <span className="text-sm text-gray-400 line-through">
-              ₹4,499
-            </span>
-          </div>
-
-          <button
-            type="button"
-            className="w-full mt-5 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
-          >
-            🛒 Add to Cart
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-  </div>
-  <div>
-    {/* Special Offers Banner */}
-<section className="px-6 py-16">
-
-  <div className="max-w-7xl mx-auto">
-
-    <div className="bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 rounded-3xl overflow-hidden">
-
-      <div className="grid grid-cols-1 md:grid-cols-2 items-center">
-
-        {/* Left Content */}
-        <div className="p-8 md:p-14 text-white">
-
-          <span className="inline-block bg-white/20 px-4 py-2 rounded-full text-sm font-semibold">
-            🔥 Special Offer
-          </span>
-
-          <h2 className="text-3xl md:text-5xl font-bold mt-6 leading-tight">
-            Upgrade Your Tech
-            <br />
-            For Less!
-          </h2>
-
-          <p className="text-blue-100 mt-5 text-lg">
-            Discover amazing deals on the latest laptops,
-            smartphones and electronic gadgets.
-          </p>
-
-          <div className="mt-6">
-            <p className="text-sm text-blue-100">
-              Exclusive deals on selected products
+            <p className="mx-auto mt-4 max-w-xl leading-7 text-gray-600">
+              Explore our store and stay informed about product updates
+              and the latest additions to our collection.
             </p>
 
-            <p className="text-2xl font-bold mt-2">
-              Great Products. Great Prices.
+            {subscribed ? (
+              <p className="mt-6 font-semibold text-green-700">
+                Your form has been submitted successfully!
+              </p>
+            ) : (
+              <form
+                onSubmit={handleSubscribe}
+                className="mx-auto mt-7 flex max-w-xl flex-col gap-3 sm:flex-row"
+              >
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email address"
+                  aria-label="Email address"
+                  autoComplete="email"
+                  required
+                  className="min-w-0 flex-1 rounded-xl border border-gray-200 bg-white px-5 py-4 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                />
+
+                <button
+                  type="submit"
+                  className="rounded-xl bg-blue-600 px-7 py-4 font-bold text-white transition hover:bg-blue-700"
+                >
+                  Subscribe →
+                </button>
+              </form>
+            )}
+
+            <p className="mt-4 text-xs text-gray-500">
+              This demo form does not send or store emails.
             </p>
           </div>
+        </section>
 
-          <button
-            type="button"
-            className="mt-8 bg-white text-blue-700 font-bold px-8 py-3 rounded-xl hover:bg-gray-100 transition duration-300"
-          >
-            Shop Now →
-          </button>
+      </main>
 
-        </div>
-
-        {/* Right Image */}
-        <div className="p-8 md:p-10">
-
-          <img
-            src="https://images.unsplash.com/photo-1498049794561-7780e7231661?w=900"
-            alt="Electronic gadgets special offer"
-            className="w-full h-64 md:h-96 object-cover rounded-2xl shadow-2xl"
-          />
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-  </div>
-  <div>
-    ```jsx
-{/* Best Sellers Section */}
-<section className="px-6 py-16 bg-gray-50">
-  <div className="max-w-7xl mx-auto">
-
-    {/* Section Heading */}
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10">
-      <div>
-        <p className="text-blue-600 font-semibold uppercase tracking-wider text-sm">
-          Customer Favorites
-        </p>
-
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2">
-          Best Sellers
-        </h2>
-
-        <p className="text-gray-500 mt-3">
-          Explore our most popular electronics and gadgets.
-        </p>
-      </div>
-
-      <button
-        type="button"
-        className="mt-5 sm:mt-0 border border-blue-600 text-blue-600 px-6 py-3 rounded-xl font-semibold hover:bg-blue-600 hover:text-white transition duration-300"
-      >
-        View All Products →
-      </button>
-    </div>
-
-    {/* Product Cards */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
-
-      {/* Product 1 - Laptop */}
-      <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group">
-        <div className="relative bg-gray-100 p-5">
-          <span className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-            BESTSELLER
-          </span>
-
-          <img
-            src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600"
-            alt="Laptop"
-            className="w-full h-48 object-contain group-hover:scale-105 transition duration-300"
-          />
-        </div>
-
-        <div className="p-5">
-          <p className="text-sm text-gray-500">Computers</p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-1">
-            Premium Laptop
-          </h3>
-
-          <p className="text-yellow-500 mt-2">
-            ★★★★★ <span className="text-gray-500 text-sm">(128 reviews)</span>
-          </p>
-
-          <div className="flex items-center gap-3 mt-3">
-            <span className="text-xl font-bold text-gray-900">₹54,999</span>
-            <span className="text-sm text-gray-400 line-through">₹64,999</span>
-          </div>
-
-          <button
-            type="button"
-            className="w-full mt-5 bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
-          >
-            Add to Cart +
-          </button>
-        </div>
-      </div>
-
-      {/* Product 2 - Smartphone */}
-      <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group">
-        <div className="relative bg-gray-100 p-5">
-          <span className="absolute top-4 left-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-            POPULAR
-          </span>
-
-          <img
-            src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600"
-            alt="Smartphone"
-            className="w-full h-48 object-contain group-hover:scale-105 transition duration-300"
-          />
-        </div>
-
-        <div className="p-5">
-          <p className="text-sm text-gray-500">Smartphones</p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-1">
-            Smart Smartphone
-          </h3>
-
-          <p className="text-yellow-500 mt-2">
-            ★★★★★ <span className="text-gray-500 text-sm">(96 reviews)</span>
-          </p>
-
-          <div className="flex items-center gap-3 mt-3">
-            <span className="text-xl font-bold text-gray-900">₹24,999</span>
-            <span className="text-sm text-gray-400 line-through">₹29,999</span>
-          </div>
-
-          <button
-            type="button"
-            className="w-full mt-5 bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
-          >
-            Add to Cart +
-          </button>
-        </div>
-      </div>
-
-      {/* Product 3 - Wireless Earbuds */}
-      <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group">
-        <div className="relative bg-gray-100 p-5">
-          <span className="absolute top-4 left-4 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-            TRENDING
-          </span>
-
-          <img
-            src="https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=600"
-            alt="Wireless Earbuds"
-            className="w-full h-48 object-contain group-hover:scale-105 transition duration-300"
-          />
-        </div>
-
-        <div className="p-5">
-          <p className="text-sm text-gray-500">Audio</p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-1">
-            Wireless Earbuds
-          </h3>
-
-          <p className="text-yellow-500 mt-2">
-            ★★★★☆ <span className="text-gray-500 text-sm">(84 reviews)</span>
-          </p>
-
-          <div className="flex items-center gap-3 mt-3">
-            <span className="text-xl font-bold text-gray-900">₹1,999</span>
-            <span className="text-sm text-gray-400 line-through">₹2,999</span>
-          </div>
-
-          <button
-            type="button"
-            className="w-full mt-5 bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
-          >
-            Add to Cart +
-          </button>
-        </div>
-      </div>
-
-      {/* Product 4 - Smartwatch */}
-      <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden group">
-        <div className="relative bg-gray-100 p-5">
-          <span className="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-            TOP RATED
-          </span>
-
-          <img
-            src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600"
-            alt="Smartwatch"
-            className="w-full h-48 object-contain group-hover:scale-105 transition duration-300"
-          />
-        </div>
-
-        <div className="p-5">
-          <p className="text-sm text-gray-500">Wearables</p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-1">
-            Premium Smartwatch
-          </h3>
-
-          <p className="text-yellow-500 mt-2">
-            ★★★★★ <span className="text-gray-500 text-sm">(112 reviews)</span>
-          </p>
-
-          <div className="flex items-center gap-3 mt-3">
-            <span className="text-xl font-bold text-gray-900">₹3,499</span>
-            <span className="text-sm text-gray-400 line-through">₹4,999</span>
-          </div>
-
-          <button
-            type="button"
-            className="w-full mt-5 bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
-          >
-            Add to Cart +
-          </button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-  </div>
-  <div>
-    ```jsx
-{/* New Arrivals Section */}
-<section className="px-6 py-16 bg-white">
-  <div className="max-w-7xl mx-auto">
-
-    {/* Section Heading */}
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10">
-      <div>
-        <p className="text-purple-600 font-semibold uppercase tracking-wider text-sm">
-          Just Launched
-        </p>
-
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2">
-          New Arrivals
-        </h2>
-
-        <p className="text-gray-500 mt-3">
-          Discover the latest technology and upgrade your lifestyle.
-        </p>
-      </div>
-
-      <button
-        type="button"
-        className="mt-5 sm:mt-0 border border-purple-600 text-purple-600 px-6 py-3 rounded-xl font-semibold hover:bg-purple-600 hover:text-white transition duration-300"
-      >
-        Explore More →
-      </button>
-    </div>
-
-    {/* Product Grid */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
-
-      {/* Product 1 - Gaming Laptop */}
-      <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-xl transition duration-300 group">
-
-        <div className="relative bg-gray-100 p-5">
-          <span className="absolute top-4 left-4 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-            NEW
-          </span>
-
-          <img
-            src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600"
-            alt="Gaming Laptop"
-            className="w-full h-48 object-contain group-hover:scale-105 transition duration-300"
-          />
-        </div>
-
-        <div className="p-5">
-          <p className="text-sm text-gray-500">Computers</p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-1">
-            Gaming Laptop
-          </h3>
-
-          <p className="text-yellow-500 mt-2">
-            ★★★★★ <span className="text-gray-500 text-sm">(New product)</span>
-          </p>
-
-          <div className="flex items-center gap-3 mt-3">
-            <span className="text-xl font-bold text-gray-900">₹69,999</span>
-            <span className="text-sm text-gray-400 line-through">₹79,999</span>
-          </div>
-
-          <button
-            type="button"
-            className="w-full mt-5 bg-purple-600 text-white py-3 rounded-xl font-semibold hover:bg-purple-700 transition"
-          >
-            Add to Cart +
-          </button>
-        </div>
-      </div>
-
-      {/* Product 2 - Tablet */}
-      <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-xl transition duration-300 group">
-
-        <div className="relative bg-gray-100 p-5">
-          <span className="absolute top-4 left-4 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-            NEW
-          </span>
-
-          <img
-            src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600"
-            alt="Tablet"
-            className="w-full h-48 object-contain group-hover:scale-105 transition duration-300"
-          />
-        </div>
-
-        <div className="p-5">
-          <p className="text-sm text-gray-500">Tablets</p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-1">
-            Smart Tablet
-          </h3>
-
-          <p className="text-yellow-500 mt-2">
-            ★★★★☆ <span className="text-gray-500 text-sm">(New product)</span>
-          </p>
-
-          <div className="flex items-center gap-3 mt-3">
-            <span className="text-xl font-bold text-gray-900">₹32,999</span>
-            <span className="text-sm text-gray-400 line-through">₹37,999</span>
-          </div>
-
-          <button
-            type="button"
-            className="w-full mt-5 bg-purple-600 text-white py-3 rounded-xl font-semibold hover:bg-purple-700 transition"
-          >
-            Add to Cart +
-          </button>
-        </div>
-      </div>
-
-      {/* Product 3 - Headphones */}
-      <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-xl transition duration-300 group">
-
-        <div className="relative bg-gray-100 p-5">
-          <span className="absolute top-4 left-4 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-            NEW
-          </span>
-
-          <img
-            src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600"
-            alt="Wireless Headphones"
-            className="w-full h-48 object-contain group-hover:scale-105 transition duration-300"
-          />
-        </div>
-
-        <div className="p-5">
-          <p className="text-sm text-gray-500">Audio</p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-1">
-            Wireless Headphones
-          </h3>
-
-          <p className="text-yellow-500 mt-2">
-            ★★★★★ <span className="text-gray-500 text-sm">(New product)</span>
-          </p>
-
-          <div className="flex items-center gap-3 mt-3">
-            <span className="text-xl font-bold text-gray-900">₹4,499</span>
-            <span className="text-sm text-gray-400 line-through">₹5,999</span>
-          </div>
-
-          <button
-            type="button"
-            className="w-full mt-5 bg-purple-600 text-white py-3 rounded-xl font-semibold hover:bg-purple-700 transition"
-          >
-            Add to Cart +
-          </button>
-        </div>
-      </div>
-
-      {/* Product 4 - Digital Camera */}
-      <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-xl transition duration-300 group">
-
-        <div className="relative bg-gray-100 p-5">
-          <span className="absolute top-4 left-4 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-            NEW
-          </span>
-
-          <img
-            src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600"
-            alt="Digital Camera"
-            className="w-full h-48 object-contain group-hover:scale-105 transition duration-300"
-          />
-        </div>
-
-        <div className="p-5">
-          <p className="text-sm text-gray-500">Photography</p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-1">
-            Digital Camera
-          </h3>
-
-          <p className="text-yellow-500 mt-2">
-            ★★★★☆ <span className="text-gray-500 text-sm">(New product)</span>
-          </p>
-
-          <div className="flex items-center gap-3 mt-3">
-            <span className="text-xl font-bold text-gray-900">₹42,999</span>
-            <span className="text-sm text-gray-400 line-through">₹49,999</span>
-          </div>
-
-          <button
-            type="button"
-            className="w-full mt-5 bg-purple-600 text-white py-3 rounded-xl font-semibold hover:bg-purple-700 transition"
-          >
-            Add to Cart +
-          </button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-  </div> 
- {/*  */}
-  <Footer/> 
-  
-  </>
-  )
+      <Footer />
+    </>
+  );
 }
-<Navbar/>
 
-export default Home
+export default Home;
